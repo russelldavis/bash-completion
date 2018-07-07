@@ -30,7 +30,8 @@ case $DIST in
 esac
 
 cd test
-xvfb-run $PYTEST t
+echo $(expr 2 "*" $(nproc 2>/dev/null || echo 1))
+xvfb-run $PYTEST --dist=loadfile -n $(expr 2 "*" $(nproc 2>/dev/null || echo 1)) t
 xvfb-run ./runCompletion --all --verbose
 ./runInstall --verbose --all --verbose
 ./runUnit --all --verbose
